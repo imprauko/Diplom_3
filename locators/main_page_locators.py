@@ -5,6 +5,7 @@ class MainPageLocators:
     BUTTON_ACCOUNT_MAIN_PAGE = (By.XPATH, '//a[@href="/account"]')  # "Личный кабинет"
     BUTTON_CONSTRUCTOR = (By.XPATH, '//a[.//p[text()="Конструктор"]]')  # Кнопка "Конструктор"
     BUTTON_ORDERS_PAGE = (By.XPATH, '//a[@href="/feed"]')  # "Список заказов"
+    OVERLAY = (By.XPATH, "//div[1][contains(@class, 'Modal_modal_overlay__x2ZCr')]") #модалка оверлей
 
     INGREDIENT_PANEL = { # "Панель с ингредиентом"
         1: (By.XPATH, '//a[@href="/ingredient/61c0c5a71d1f82001bdaaa6d"]'), # "булка 1"

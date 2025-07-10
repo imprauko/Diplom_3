@@ -1,7 +1,4 @@
-import time
-
 import allure
-from selenium.webdriver.support.wait import WebDriverWait
 
 from locators.main_page_locators import MainPageLocators, ConstructorPageLocators
 from locators.orders_page_locators import OrdersPageLocators
@@ -27,13 +24,10 @@ class OrdersPageSteps(BasePageSteps):
     def get_order_number(self):
         locator = ConstructorPageLocators.HEADER_ORDER_NUMBER
 
-        def condition(driver):
-            element = driver.find_element(*locator)
-            text = element.text
+        def condition():
+            text = self.get_text(locator)
             return text.isdigit() and int(text) > 9999
-
-        WebDriverWait(self.driver, 10).until(condition)
-
+        self.wait_for_condition(condition)
         return self.get_text(locator)
 
 
@@ -51,12 +45,11 @@ class OrdersPageSteps(BasePageSteps):
     def get_order_number_in_list(self,order_number):
         locator = OrdersPageLocators.LIST_ORDERS_PREPARING
 
-        def condition(driver):
-            element = driver.find_element(*locator)
-            text = element.text
+        def condition():
+            text = self.get_text(locator)
             return text.isdigit() and order_number in text
 
-        WebDriverWait(self.driver, 10).until(condition)
+        self.wait_for_condition(condition)
 
         return self.get_text(locator)
 
@@ -84,7 +77,7 @@ class OrdersPageSteps(BasePageSteps):
     @allure.step('Добавляем ингредиент в корзину заказа')
     def drag_and_drop_ingredient_panel_to_bucket(self, index):
         self.drag_and_drop(MainPageLocators.INGREDIENT_PANEL[index], ConstructorPageLocators.BUTTON_ORDER_CONFIRM)
-        time.sleep(0.5)
+
 
     @allure.step('Кликаем на кнопку подтвердить заказ')
     def click_order_confirm_button(self):
@@ -99,3 +92,7 @@ class OrdersPageSteps(BasePageSteps):
     @allure.step('Кликаем на кнопку закрытия попапа нового заказа')
     def close_popup_order(self):
         self.click_on_element(ConstructorPageLocators.BUTTON_CLOSE_ORDER_NUMBER)
+
+    @allure.step('Ждем исчезновения оверлея')
+    def wait_overlay_close(self):
+        self.wait_element_disappeared(MainPageLocators.OVERLAY)

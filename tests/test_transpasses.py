@@ -1,8 +1,5 @@
-import time
-
 import allure
 
-from conftest import setup_logged_in
 from pages.main_page import MainPageSteps
 from pages.orders_page import OrdersPageSteps
 from pages.profile_page import ProfilePageSteps
@@ -15,6 +12,7 @@ class TestButtonTranspassClick:
         'переход на страницу заказов через кнопку в хэдере')
     def test_orders_feed_button_from_main(self, setup_logged_in):
         main_page = MainPageSteps(setup_logged_in)
+        main_page.wait_popup_close()
         main_page.wait_clickability_orders_button_header()
         main_page.click_orders_button_header()
         main_page.wait_orders_feed_header()
@@ -29,9 +27,12 @@ class TestButtonTranspassClick:
         main_page.wait_clickability_profile_button_header()
         main_page.click_profile_button_header()
         main_page.wait_orders_button_header()
+        main_page.wait_overlay_close()
+        main_page.wait_clickability_orders_button_header()
+        main_page.wait_clickability_logout_button()
         main_page.click_orders_button_header()
         main_page.wait_orders_feed_header()
-        assert main_page.check_orders_feed_header
+        assert main_page.check_orders_feed_header()
 
     @allure.title(
         'Проверяем переход на страницу конструктора через кнопку на странице листа заказов')
@@ -55,6 +56,9 @@ class TestButtonTranspassClick:
         main_page.wait_clickability_profile_button_header()
         main_page.click_profile_button_header()
         main_page.wait_constructor_button()
+        main_page.wait_overlay_close()
+        main_page.wait_constructor_button_clickability()
+        main_page.wait_clickability_logout_button()
         main_page.click_constructor_button()
         main_page.wait_constructor_header()
         assert main_page.check_constructor_header()

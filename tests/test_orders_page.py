@@ -1,6 +1,5 @@
 import allure
 
-from conftest import setup_logged_in
 from pages.orders_page import OrdersPageSteps
 
 
@@ -17,10 +16,12 @@ class TestOrderNumbers:
         old_total_number = main_page.get_count_orders_total()
         old_by_day_number = main_page.get_count_orders_by_day()
         main_page.click_constructor_button_header()
+        main_page.wait_overlay_close()
         main_page.wait_order_confirm_button()
         main_page.drag_and_drop_ingredient_panel_to_bucket(1)
         main_page.click_order_confirm_button()
         order_number = main_page.get_order_number()
+        main_page.wait_overlay_close()
         main_page.close_popup_order()
         main_page.click_orders_button_header()
         main_page.wait_count_orders_total()

@@ -26,6 +26,10 @@ class MainPageSteps(BasePageSteps):
     def wait_ingredient_details(self):
         self.wait_for_element(MainPageLocators.HEADER_DETAILS)
 
+    @allure.step('Ждем исчезновения Заголовка деталей ингредиента')
+    def wait_ingredient_details_close_header(self):
+        self.wait_element_disappeared(MainPageLocators.HEADER_DETAILS)
+
     @allure.step('Ждем прогрузки кнопки закрытия деталей ингредиента')
     def wait_ingredient_details_close_button(self):
         self.wait_for_element(MainPageLocators.BUTTON_CLOSE_DETAILS)
